@@ -9,9 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contact_contact_list', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('contact_id')->constrained();
-            $table->foreignId('contact_list_id')->constrained();
+            $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('contact_list_id')->constrained()->cascadeOnDelete();
+            $table->unique(['contact_id', 'contact_list_id']);
             $table->timestamps();
         });
     }

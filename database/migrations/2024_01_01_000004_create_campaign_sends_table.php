@@ -10,11 +10,13 @@ return new class extends Migration
     {
         Schema::create('campaign_sends', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->constrained();
-            $table->foreignId('contact_id')->constrained();
+            $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('contact_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['pending', 'sent', 'failed'])->default('pending');
             $table->text('error_message')->nullable();
             $table->timestamps();
+            $table->unique(['campaign_id', 'contact_id']);
+            $table->index('contact_id');
         });
     }
 

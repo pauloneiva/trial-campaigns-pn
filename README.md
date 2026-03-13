@@ -17,6 +17,9 @@ composer install
 php artisan key:generate
 php artisan migrate --seed
 php artisan queue:work
+php artisan schedule:work
+# to run tests:
+php artisan test
 ```
 
 ## What exists (if not, create to work)

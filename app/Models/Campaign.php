@@ -11,9 +11,13 @@ class Campaign extends Model
 
     protected $fillable = ['subject', 'body', 'contact_list_id', 'status', 'scheduled_at'];
 
-    
+    protected $attributes = [
+        'status' => 'draft',
+    ];
+
+
     protected $casts = [
-        'status' => 'string',
+        'scheduled_at' => 'datetime',
     ];
 
     public function contactList(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -28,13 +32,16 @@ class Campaign extends Model
 
     public function getStatsAttribute(): array
     {
-        $sends = $this->sends;
+        $counts = $this->sends()
+            ->selectRaw('status, COUNT(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status');
 
         return [
-            'pending' => $sends->where('status', 'pending')->count(),
-            'sent'    => $sends->where('status', 'sent')->count(),
-            'failed'  => $sends->where('status', 'failed')->count(),
-            'total'   => $sends->count(),
+            'pending' => $counts['pending'] ?? 0,
+            'sent'    => $counts['sent'] ?? 0,
+            'failed'  => $counts['failed'] ?? 0,
+            'total'   => $counts->sum(),
         ];
     }
 }

@@ -1,0 +1,216 @@
+{
+  "info": {
+    "name": "Campaign Manager API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Contacts",
+      "item": [
+        {
+          "name": "List contacts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/contacts?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["contacts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts",
+              "host": ["{{base_url}}"],
+              "path": ["contacts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"status\": \"active\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Unsubscribe contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contacts/1/unsubscribe",
+              "host": ["{{base_url}}"],
+              "path": ["contacts", "1", "unsubscribe"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact Lists",
+      "item": [
+        {
+          "name": "List contact lists",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/contact-lists?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["contact-lists"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create contact list",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contact-lists",
+              "host": ["{{base_url}}"],
+              "path": ["contact-lists"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Newsletter Subscribers\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Add contact to list",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/contact-lists/1/contacts",
+              "host": ["{{base_url}}"],
+              "path": ["contact-lists", "1", "contacts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contact_id\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Campaigns",
+      "item": [
+        {
+          "name": "List campaigns",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/campaigns?page=1&per_page=20",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "per_page", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Our April Newsletter\",\n  \"body\": \"Hello, here is what's new this month...\",\n  \"contact_list_id\": 1,\n  \"scheduled_at\": \"2026-04-01 09:00:00\"\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Create campaign (no schedule)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subject\": \"Flash Sale — Today Only\",\n  \"body\": \"Don't miss out on our biggest sale of the year.\",\n  \"contact_list_id\": 1\n}",
+              "options": { "raw": { "language": "json" } }
+            }
+          }
+        },
+        {
+          "name": "Show campaign",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns/1",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "1"]
+            }
+          }
+        },
+        {
+          "name": "Dispatch campaign",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/campaigns/1/dispatch",
+              "host": ["{{base_url}}"],
+              "path": ["campaigns", "1", "dispatch"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

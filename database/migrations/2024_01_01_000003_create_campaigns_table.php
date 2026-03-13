@@ -12,10 +12,12 @@ return new class extends Migration
             $table->id();
             $table->string('subject');
             $table->text('body');
-            $table->foreignId('contact_list_id')->constrained();
+            $table->foreignId('contact_list_id')->constrained()->restrictOnDelete();
             $table->enum('status', ['draft', 'sending', 'sent'])->default('draft');
-            $table->string('scheduled_at')->nullable();
+            $table->timestamp('scheduled_at')->nullable();
             $table->timestamps();
+            $table->index('status');
+            $table->index('scheduled_at');
         });
     }
 
